@@ -1,0 +1,2589 @@
+<!--
+
+=========================================================
+* Now UI Dashboard - v1.5.0
+=========================================================
+
+* Product Page: https://www.creative-tim.com/product/now-ui-dashboard
+* Copyright 2019 Creative Tim (http://www.creative-tim.com)
+
+* Designed by www.invisionapp.com Coded by www.creative-tim.com
+
+=========================================================
+
+* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <link rel="apple-touch-icon" sizes="76x76" href="../static/img/apple-icon.png" />
+  <link rel="icon" type="image/png" href="../static/img/favicon.png" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <title>CovidProject</title>
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no"
+    name="viewport" />
+  <!--     Fonts and icons     -->
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css"
+    integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous" />
+  <!-- CSS Files -->
+  <link href="../static/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="../static/css/now-ui-dashboard.css?v=1.5.0" rel="stylesheet" />
+  <!-- CSS Just for demo purpose, don't include it in your project -->
+  <link href="../static/demo/demo.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+  <!-- D3.js 및 TopoJSON 라이브러리 추가 -->
+  <script src="https://d3js.org/d3.v6.min.js"></script>
+  <script src="https://d3js.org/topojson.v3.min.js"></script>
+  <style>
+    .map_wrap,
+    .map_wrap * {
+      margin: 0;
+      padding: 0;
+      font-family: "Malgun Gothic", dotum, "돋움", sans-serif;
+      font-size: 12px;
+    }
+
+    .map_wrap a,
+    .map_wrap a:hover,
+    .map_wrap a:active {
+      color: #000;
+      text-decoration: none;
+    }
+
+    .map_wrap {
+      position: relative;
+      width: 100%;
+      height: 500px;
+    }
+
+    #menu_wrap {
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: 250px;
+      margin: 10px 0 30px 10px;
+      padding: 5px;
+      overflow-y: auto;
+      background: rgba(255, 255, 255, 0.7);
+      z-index: 1;
+      font-size: 12px;
+      border-radius: 10px;
+    }
+
+    .bg_white {
+      background: #fff;
+    }
+
+    #menu_wrap hr {
+      display: block;
+      height: 1px;
+      border: 0;
+      border-top: 2px solid #5f5f5f;
+      margin: 3px 0;
+    }
+
+    #menu_wrap .option {
+      text-align: center;
+    }
+
+    #menu_wrap .option p {
+      margin: 10px 0;
+    }
+
+    #menu_wrap .option button {
+      margin-left: 5px;
+    }
+
+    #placesList li {
+      list-style: none;
+    }
+
+    #placesList .item {
+      position: relative;
+      border-bottom: 1px solid #888;
+      overflow: hidden;
+      cursor: pointer;
+      min-height: 65px;
+    }
+
+    #placesList .item span {
+      display: block;
+      margin-top: 4px;
+    }
+
+    #placesList .item h5,
+    #placesList .item .info {
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    #placesList .item .info {
+      padding: 10px 0 10px 55px;
+    }
+
+    #placesList .info .gray {
+      color: #8a8a8a;
+    }
+
+    #placesList .info .jibun {
+      padding-left: 26px;
+      background: url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_jibun.png) no-repeat;
+    }
+
+    #placesList .info .tel {
+      color: #009900;
+    }
+
+    #placesList .item .markerbg {
+      float: left;
+      position: absolute;
+      width: 36px;
+      height: 37px;
+      margin: 10px 0 0 10px;
+      background: url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png) no-repeat;
+    }
+
+    #placesList .item .marker_1 {
+      background-position: 0 -10px;
+    }
+
+    #placesList .item .marker_2 {
+      background-position: 0 -56px;
+    }
+
+    #placesList .item .marker_3 {
+      background-position: 0 -102px;
+    }
+
+    #placesList .item .marker_4 {
+      background-position: 0 -148px;
+    }
+
+    #placesList .item .marker_5 {
+      background-position: 0 -194px;
+    }
+
+    #placesList .item .marker_6 {
+      background-position: 0 -240px;
+    }
+
+    #placesList .item .marker_7 {
+      background-position: 0 -286px;
+    }
+
+    #placesList .item .marker_8 {
+      background-position: 0 -332px;
+    }
+
+    #placesList .item .marker_9 {
+      background-position: 0 -378px;
+    }
+
+    #placesList .item .marker_10 {
+      background-position: 0 -423px;
+    }
+
+    #placesList .item .marker_11 {
+      background-position: 0 -470px;
+    }
+
+    #placesList .item .marker_12 {
+      background-position: 0 -516px;
+    }
+
+    #placesList .item .marker_13 {
+      background-position: 0 -562px;
+    }
+
+    #placesList .item .marker_14 {
+      background-position: 0 -608px;
+    }
+
+    #placesList .item .marker_15 {
+      background-position: 0 -654px;
+    }
+
+    #pagination {
+      margin: 10px auto;
+      text-align: center;
+    }
+
+    #pagination a {
+      display: inline-block;
+      margin-right: 10px;
+    }
+
+    #pagination .on {
+      font-weight: bold;
+      cursor: default;
+      color: #777;
+    }
+
+    .tooltip {
+      position: absolute;
+      text-align: center;
+      width: 100px;
+      height: 80px;
+      padding: 2px;
+      font: 13px sans-serif;
+      background: lightsteelblue;
+      border: 0px;
+      border-radius: 8px;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<script>
+  var sido_total_L = {{ sido_total_label | tojson | safe }}
+  var sigungu_L = {{ sigungu_label | tojson | safe }}
+  var sido_total_d = {{ sido_total_data | tojson | safe }}
+  var sigungu_data = {{ sigungu_data | tojson | safe }}
+  var datas_0_5 = {{ data_0_5_list | tojson | safe }}
+  console.log(sido_total_L)
+  console.log(sigungu_L)
+  console.log(sido_total_d)
+  console.log(sigungu_data)
+  console.log(datas_0_5)
+  const groupedData = {};
+
+  sigungu_L.forEach(([city, district]) => {
+    if (!groupedData[city]) {
+      groupedData[city] = [];
+    }
+    groupedData[city].push(district);
+  });
+
+  $(document).ready(function () {
+    const ctx1 = document.getElementById("myChart1");
+    const ctx2 = document.getElementById("myChart2");
+    const ctx3 = document.getElementById("myChart3");
+    const ctx4 = document.getElementById("myChart4");
+    const ctx5 = document.getElementById("myChart5");
+    const ctx6 = document.getElementById("myChart6");
+    const ctx7 = document.getElementById("myChart7"); //서울
+    const ctx8 = document.getElementById("myChart8"); //부산
+    const ctx9 = document.getElementById("myChart9"); //대구
+    const ctx10 = document.getElementById("myChart10"); //인천
+    const ctx11 = document.getElementById("myChart11"); //광주
+    const ctx12 = document.getElementById("myChart12"); //대전
+    const ctx13 = document.getElementById("myChart13"); //울산
+    const ctx14 = document.getElementById("myChart14"); //세종
+    const ctx15 = document.getElementById("myChart15"); //경기
+    const ctx16 = document.getElementById("myChart16"); //강원
+    const ctx17 = document.getElementById("myChart17"); //충북
+    const ctx18 = document.getElementById("myChart18"); //충남
+    const ctx19 = document.getElementById("myChart19"); //전북
+    const ctx20 = document.getElementById("myChart20"); //전남
+    const ctx21 = document.getElementById("myChart21"); //경북
+    const ctx22 = document.getElementById("myChart22"); //경남
+    const ctx23 = document.getElementById("myChart23"); //제주
+    new Chart(ctx1, {
+      type: "bar",
+      data: {
+        labels: datas_0_5[0][0].index,
+        datasets: [
+          {
+            label: "합계",
+            data: datas_0_5[0][0].data,
+            borderWidth: 1,
+          },
+          {
+            label: "국내발생",
+            data: datas_0_5[0][1].data,
+            borderWidth: 1,
+          },
+          {
+            label: "해외유입",
+            data: datas_0_5[0][2].data,
+            borderWidth: 1,
+          },
+          {
+            label: "사망",
+            data: datas_0_5[0][3].data,
+            borderWidth: 1,
+          },
+        ],
+      },
+      options: {
+        responsive: false,
+        scales: {
+          myScale: {
+            type: "logarithmic",
+            position: "right",
+          },
+          y: {
+            beginAtZero: true,
+          },
+        },
+      },
+    });
+    new Chart(ctx2, {
+      type: "line",
+      data: {
+        labels: datas_0_5[1][0].index,
+        datasets: [
+          {
+            label: "누적 확진자",
+            data: datas_0_5[1][0].data, // 합계
+            borderWidth: 1,
+          },
+          {
+            label: "0-9세",
+            data: datas_0_5[1][1].data,
+            borderWidth: 1,
+          },
+          {
+            label: "10-19세",
+            data: datas_0_5[1][2].data,
+            borderWidth: 1,
+          },
+          {
+            label: "20-29세",
+            data: datas_0_5[1][3].data,
+            borderWidth: 1,
+          },
+          {
+            label: "30-39세",
+            data: datas_0_5[1][4].data,
+            borderWidth: 1,
+          },
+          {
+            label: "40-49세",
+            data: datas_0_5[1][5].data,
+            borderWidth: 1,
+          },
+          {
+            label: "50-59세",
+            data: datas_0_5[1][6].data,
+            borderWidth: 1,
+          },
+          {
+            label: "60-69세",
+            data: datas_0_5[1][7].data,
+            borderWidth: 1,
+          },
+          {
+            label: "70-79세",
+            data: datas_0_5[1][8].data,
+            borderWidth: 1,
+          },
+          {
+            label: "80세 이상",
+            data: datas_0_5[1][9].data,
+            borderWidth: 1,
+          },
+        ],
+      },
+      options: {
+        responsive: false,
+        scales: {
+          myScale: {
+            type: "logarithmic",
+            position: "right", // `axis` is determined by the position as `'y'`
+          },
+          y: {
+            beginAtZero: true,
+          },
+        },
+      },
+    });
+    new Chart(ctx3, {
+      type: "bar",
+      data: {
+        labels: datas_0_5[2][0].index,
+        datasets: [
+          {
+            label: "합계",
+            data: datas_0_5[2][0].data, //합계
+            borderWidth: 1,
+          },
+          {
+            label: "남",
+            data: datas_0_5[2][1].data, //합계
+            borderWidth: 1,
+          },
+          {
+            label: "여",
+            data: datas_0_5[2][2].data, //합계
+            borderWidth: 1,
+          },
+        ],
+      },
+      options: {
+        responsive: false,
+        scales: {
+          myScale: {
+            type: "logarithmic",
+            position: "right", // `axis` is determined by the position as `'y'`
+          },
+          y: {
+            beginAtZero: true,
+          },
+        },
+      },
+    });
+    new Chart(ctx4, {
+      type: "line",
+      data: {
+        labels: datas_0_5[3][0].index,
+        datasets: [
+          {
+            label: "합계",
+            data: datas_0_5[3][0].data, //합계
+            borderWidth: 1,
+          },
+          {
+            label: "서울 발생",
+            data: datas_0_5[3][1].data, //합계
+            borderWidth: 1,
+          },
+          {
+            label: "부산 발생",
+            data: datas_0_5[3][2].data, //합계
+            borderWidth: 1,
+          },
+          {
+            label: "대구 발생",
+            data: datas_0_5[3][3].data, //합계
+            borderWidth: 1,
+          },
+          {
+            label: "인천 발생",
+            data: datas_0_5[3][4].data, //합계
+            borderWidth: 1,
+          },
+          {
+            label: "광주 발생",
+            data: datas_0_5[3][5].data, //합계
+            borderWidth: 1,
+          },
+          {
+            label: "대전 발생",
+            data: datas_0_5[3][6].data, //합계
+            borderWidth: 1,
+          },
+          {
+            label: "울산 발생",
+            data: datas_0_5[3][7].data, //합계
+            borderWidth: 1,
+          },
+          {
+            label: "세종 발생",
+            data: datas_0_5[3][8].data, //합계
+            borderWidth: 1,
+          },
+          {
+            label: "경기 발생",
+            data: datas_0_5[3][9].data, //합계
+            borderWidth: 1,
+          },
+          {
+            label: "강원 발생",
+            data: datas_0_5[3][10].data, //합계
+            borderWidth: 1,
+          },
+          {
+            label: "충북 발생",
+            data: datas_0_5[3][11].data, //합계
+            borderWidth: 1,
+          },
+          {
+            label: "충남 발생",
+            data: datas_0_5[3][12].data, //합계
+            borderWidth: 1,
+          },
+          {
+            label: "전북 발생",
+            data: datas_0_5[3][13].data, //합계
+            borderWidth: 1,
+          },
+          {
+            label: "전남 발생",
+            data: datas_0_5[3][14].data, //합계
+            borderWidth: 1,
+          },
+          {
+            label: "경북 발생",
+            data: datas_0_5[3][15].data, //합계
+            borderWidth: 1,
+          },
+          {
+            label: "경남 발생",
+            data: datas_0_5[3][16].data, //합계
+            borderWidth: 1,
+          },
+          {
+            label: "제주 발생",
+            data: datas_0_5[3][17].data, //합계
+            borderWidth: 1,
+          },
+        ],
+      },
+      options: {
+        responsive: false,
+        scales: {
+          myScale: {
+            type: "logarithmic",
+            position: "right", // `axis` is determined by the position as `'y'`
+          },
+          y: {
+            beginAtZero: true,
+          },
+        },
+      },
+    });
+    new Chart(ctx5, {
+      type: "line",
+      data: {
+        labels: datas_0_5[4][0].index,
+        datasets: [
+          {
+            label: "합계",
+            data: datas_0_5[4][0].data, //합계
+            borderWidth: 1,
+          },
+          {
+            label: "서울 발생",
+            data: datas_0_5[4][1].data, //합계
+            borderWidth: 1,
+          },
+          {
+            label: "부산 발생",
+            data: datas_0_5[4][2].data, //합계
+            borderWidth: 1,
+          },
+          {
+            label: "대구 발생",
+            data: datas_0_5[4][3].data, //합계
+            borderWidth: 1,
+          },
+          {
+            label: "인천 발생",
+            data: datas_0_5[4][4].data, //합계
+            borderWidth: 1,
+          },
+          {
+            label: "광주 발생",
+            data: datas_0_5[4][5].data, //합계
+            borderWidth: 1,
+          },
+          {
+            label: "대전 발생",
+            data: datas_0_5[4][6].data, //합계
+            borderWidth: 1,
+          },
+          {
+            label: "울산 발생",
+            data: datas_0_5[4][7].data, //합계
+            borderWidth: 1,
+          },
+          {
+            label: "세종 발생",
+            data: datas_0_5[4][8].data, //합계
+            borderWidth: 1,
+          },
+          {
+            label: "경기 발생",
+            data: datas_0_5[4][9].data, //합계
+            borderWidth: 1,
+          },
+          {
+            label: "강원 발생",
+            data: datas_0_5[4][10].data, //합계
+            borderWidth: 1,
+          },
+          {
+            label: "충북 발생",
+            data: datas_0_5[4][11].data, //합계
+            borderWidth: 1,
+          },
+          {
+            label: "충남 발생",
+            data: datas_0_5[4][12].data, //합계
+            borderWidth: 1,
+          },
+          {
+            label: "전북 발생",
+            data: datas_0_5[4][13].data, //합계
+            borderWidth: 1,
+          },
+          {
+            label: "전남 발생",
+            data: datas_0_5[4][14].data, //합계
+            borderWidth: 1,
+          },
+          {
+            label: "경북 발생",
+            data: datas_0_5[4][15].data, //합계
+            borderWidth: 1,
+          },
+          {
+            label: "경남 발생",
+            data: datas_0_5[4][16].data, //합계
+            borderWidth: 1,
+          },
+          {
+            label: "제주 발생",
+            data: datas_0_5[4][17].data, //합계
+            borderWidth: 1,
+          },
+        ],
+      },
+      options: {
+        responsive: false,
+        scales: {
+          myScale: {
+            type: "logarithmic",
+            position: "right", // `axis` is determined by the position as `'y'`
+          },
+          y: {
+            beginAtZero: true,
+          },
+        },
+      },
+    });
+    new Chart(ctx6, {
+      type: "bar",
+      data: {
+        labels: sido_total_L,
+        datasets: [
+          {
+            label: "누적 확진자",
+            data: sido_total_d[1], // 합계
+            borderWidth: 1,
+          },
+          {
+            label: "누적 발생",
+            data: sido_total_d[2], // 합계
+            borderWidth: 1,
+          },
+          {
+            label: "발생률(인구 10만명당, 명)",
+            data: sido_total_d[3], // 발생률 데이터
+            borderWidth: 1,
+          },
+          {
+            label: "사망률(인구 10만명당, 명)",
+            data: sido_total_d[4], // 사망률 데이터
+            borderWidth: 1,
+          },
+        ],
+      },
+      options: {
+        responsive: false,
+        scales: {
+          myScale: {
+            type: "logarithmic",
+            position: "right", // `axis` is determined by the position as `'y'`
+          },
+          y: {
+            beginAtZero: true,
+          },
+        },
+      },
+    });
+    new Chart(ctx7, {
+      type: "bar",
+      data: {
+        labels: groupedData["서울"],
+        datasets: [
+          {
+            label: "누적 확진자",
+            data: sigungu_data[1].slice(0, 26), // 합계
+            borderWidth: 1,
+          },
+          {
+            label: "누적 발생",
+            data: sigungu_data[2].slice(0, 26), // 합계
+            borderWidth: 1,
+          },
+          {
+            label: "발생률(인구 10만명당, 명)",
+            data: sigungu_data[3].slice(0, 26), // 발생률 데이터
+            borderWidth: 1,
+          },
+          {
+            label: "사망률(인구 10만명당, 명)",
+            data: sigungu_data[4].slice(0, 26), // 사망률 데이터
+            borderWidth: 1,
+          },
+        ],
+      },
+      options: {
+        responsive: false,
+        scales: {
+          myScale: {
+            type: "logarithmic",
+            position: "right", // `axis` is determined by the position as `'y'`
+          },
+          y: {
+            beginAtZero: true,
+          },
+        },
+      },
+    });
+    new Chart(ctx8, {
+      type: "bar",
+      data: {
+        labels: groupedData["부산"],
+        datasets: [
+          {
+            label: "누적 확진자",
+            data: sigungu_data[1].slice(26, 43), // 합계
+            borderWidth: 1,
+          },
+          {
+            label: "누적 발생",
+            data: sigungu_data[2].slice(26, 43), // 합계
+            borderWidth: 1,
+          },
+          {
+            label: "발생률(인구 10만명당, 명)",
+            data: sigungu_data[3].slice(26, 43), // 발생률 데이터
+            borderWidth: 1,
+          },
+          {
+            label: "사망률(인구 10만명당, 명)",
+            data: sigungu_data[4].slice(26, 43), // 사망률 데이터
+            borderWidth: 1,
+          },
+        ],
+      },
+      options: {
+        responsive: false,
+        scales: {
+          myScale: {
+            type: "logarithmic",
+            position: "right", // `axis` is determined by the position as `'y'`
+          },
+          y: {
+            beginAtZero: true,
+          },
+        },
+      },
+    });
+    new Chart(ctx9, {
+      type: "bar",
+      data: {
+        labels: groupedData["대구"],
+        datasets: [
+          {
+            label: "누적 확진자",
+            data: sigungu_data[1].slice(43, 53), // 합계
+            borderWidth: 1,
+          },
+          {
+            label: "누적 발생",
+            data: sigungu_data[2].slice(43, 53), // 합계
+            borderWidth: 1,
+          },
+          {
+            label: "발생률(인구 10만명당, 명)",
+            data: sigungu_data[3].slice(43, 53), // 발생률 데이터
+            borderWidth: 1,
+          },
+          {
+            label: "사망률(인구 10만명당, 명)",
+            data: sigungu_data[4].slice(43, 53), // 사망률 데이터
+            borderWidth: 1,
+          },
+        ],
+      },
+      options: {
+        responsive: false,
+        scales: {
+          myScale: {
+            type: "logarithmic",
+            position: "right", // `axis` is determined by the position as `'y'`
+          },
+          y: {
+            beginAtZero: true,
+          },
+        },
+      },
+    });
+    new Chart(ctx10, {
+      type: "bar",
+      data: {
+        labels: groupedData["인천"],
+        datasets: [
+          {
+            label: "누적 확진자",
+            data: sigungu_data[1].slice(53, 63), // 합계
+            borderWidth: 1,
+          },
+          {
+            label: "누적 발생",
+            data: sigungu_data[2].slice(53, 63), // 합계
+            borderWidth: 1,
+          },
+          {
+            label: "발생률(인구 10만명당, 명)",
+            data: sigungu_data[3].slice(53, 63), // 발생률 데이터
+            borderWidth: 1,
+          },
+          {
+            label: "사망률(인구 10만명당, 명)",
+            data: sigungu_data[4].slice(53, 63), // 사망률 데이터
+            borderWidth: 1,
+          },
+        ],
+      },
+      options: {
+        responsive: false,
+        scales: {
+          myScale: {
+            type: "logarithmic",
+            position: "right", // `axis` is determined by the position as `'y'`
+          },
+          y: {
+            beginAtZero: true,
+          },
+        },
+      },
+    });
+    new Chart(ctx11, {
+      type: "bar",
+      data: {
+        labels: groupedData["광주"],
+        datasets: [
+          {
+            label: "누적 확진자",
+            data: sigungu_data[1].slice(63, 69), // 합계
+            borderWidth: 1,
+          },
+          {
+            label: "누적 발생",
+            data: sigungu_data[2].slice(63, 69), // 합계
+            borderWidth: 1,
+          },
+          {
+            label: "발생률(인구 10만명당, 명)",
+            data: sigungu_data[3].slice(63, 69), // 발생률 데이터
+            borderWidth: 1,
+          },
+          {
+            label: "사망률(인구 10만명당, 명)",
+            data: sigungu_data[4].slice(63, 69), // 사망률 데이터
+            borderWidth: 1,
+          },
+        ],
+      },
+      options: {
+        responsive: false,
+        scales: {
+          myScale: {
+            type: "logarithmic",
+            position: "right", // `axis` is determined by the position as `'y'`
+          },
+          y: {
+            beginAtZero: true,
+          },
+        },
+      },
+    });
+    new Chart(ctx12, {
+      type: "bar",
+      data: {
+        labels: groupedData["대전"],
+        datasets: [
+          {
+            label: "누적 확진자",
+            data: sigungu_data[1].slice(69, 75), // 합계
+            borderWidth: 1,
+          },
+          {
+            label: "누적 발생",
+            data: sigungu_data[2].slice(69, 75), // 합계
+            borderWidth: 1,
+          },
+          {
+            label: "발생률(인구 10만명당, 명)",
+            data: sigungu_data[3].slice(69, 75), // 발생률 데이터
+            borderWidth: 1,
+          },
+          {
+            label: "사망률(인구 10만명당, 명)",
+            data: sigungu_data[4].slice(69, 75), // 사망률 데이터
+            borderWidth: 1,
+          },
+        ],
+      },
+      options: {
+        responsive: false,
+        scales: {
+          myScale: {
+            type: "logarithmic",
+            position: "right", // `axis` is determined by the position as `'y'`
+          },
+          y: {
+            beginAtZero: true,
+          },
+        },
+      },
+    });
+    new Chart(ctx13, {
+      type: "bar",
+      data: {
+        labels: groupedData["울산"],
+        datasets: [
+          {
+            label: "누적 확진자",
+            data: sigungu_data[1].slice(75, 81), // 합계
+            borderWidth: 1,
+          },
+          {
+            label: "누적 발생",
+            data: sigungu_data[2].slice(75, 81), // 합계
+            borderWidth: 1,
+          },
+          {
+            label: "발생률(인구 10만명당, 명)",
+            data: sigungu_data[3].slice(75, 81), // 발생률 데이터
+            borderWidth: 1,
+          },
+          {
+            label: "사망률(인구 10만명당, 명)",
+            data: sigungu_data[4].slice(75, 81), // 사망률 데이터
+            borderWidth: 1,
+          },
+        ],
+      },
+      options: {
+        responsive: false,
+        scales: {
+          myScale: {
+            type: "logarithmic",
+            position: "right", // `axis` is determined by the position as `'y'`
+          },
+          y: {
+            beginAtZero: true,
+          },
+        },
+      },
+    });
+    new Chart(ctx14, {
+      type: "bar",
+      data: {
+        labels: groupedData["세종"],
+        datasets: [
+          {
+            label: "누적 확진자",
+            data: sigungu_data[1].slice(81, 83), // 합계
+            borderWidth: 1,
+          },
+          {
+            label: "누적 발생",
+            data: sigungu_data[2].slice(81, 83), // 합계
+            borderWidth: 1,
+          },
+          {
+            label: "발생률(인구 10만명당, 명)",
+            data: sigungu_data[3].slice(81, 83), // 발생률 데이터
+            borderWidth: 1,
+          },
+          {
+            label: "사망률(인구 10만명당, 명)",
+            data: sigungu_data[4].slice(81, 83), // 사망률 데이터
+            borderWidth: 1,
+          },
+        ],
+      },
+      options: {
+        responsive: false,
+        scales: {
+          myScale: {
+            type: "logarithmic",
+            position: "right", // `axis` is determined by the position as `'y'`
+          },
+          y: {
+            beginAtZero: true,
+          },
+        },
+      },
+    });
+    new Chart(ctx15, {
+      type: "bar",
+      data: {
+        labels: groupedData["경기"],
+        datasets: [
+          {
+            label: "누적 확진자",
+            data: sigungu_data[1].slice(83, 126), // 합계
+            borderWidth: 1,
+          },
+          {
+            label: "누적 발생",
+            data: sigungu_data[2].slice(83, 126), // 합계
+            borderWidth: 1,
+          },
+          {
+            label: "발생률(인구 10만명당, 명)",
+            data: sigungu_data[3].slice(83, 126), // 발생률 데이터
+            borderWidth: 1,
+          },
+          {
+            label: "사망률(인구 10만명당, 명)",
+            data: sigungu_data[4].slice(83, 126), // 사망률 데이터
+            borderWidth: 1,
+          },
+        ],
+      },
+      options: {
+        responsive: false,
+        scales: {
+          myScale: {
+            type: "logarithmic",
+            position: "right", // `axis` is determined by the position as `'y'`
+          },
+          y: {
+            beginAtZero: true,
+          },
+        },
+      },
+    });
+    new Chart(ctx16, {
+      type: "bar",
+      data: {
+        labels: groupedData["강원"],
+        datasets: [
+          {
+            label: "누적 확진자",
+            data: sigungu_data[1].slice(126, 145), // 합계
+            borderWidth: 1,
+          },
+          {
+            label: "누적 발생",
+            data: sigungu_data[2].slice(126, 145), // 합계
+            borderWidth: 1,
+          },
+          {
+            label: "발생률(인구 10만명당, 명)",
+            data: sigungu_data[3].slice(126, 145), // 발생률 데이터
+            borderWidth: 1,
+          },
+          {
+            label: "사망률(인구 10만명당, 명)",
+            data: sigungu_data[4].slice(126, 145), // 사망률 데이터
+            borderWidth: 1,
+          },
+        ],
+      },
+      options: {
+        responsive: false,
+        scales: {
+          myScale: {
+            type: "logarithmic",
+            position: "right", // `axis` is determined by the position as `'y'`
+          },
+          y: {
+            beginAtZero: true,
+          },
+        },
+      },
+    });
+    new Chart(ctx17, {
+      type: "bar",
+      data: {
+        labels: groupedData["충북"],
+        datasets: [
+          {
+            label: "누적 확진자",
+            data: sigungu_data[1].slice(145, 160), // 합계
+            borderWidth: 1,
+          },
+          {
+            label: "누적 발생",
+            data: sigungu_data[2].slice(145, 160), // 합계
+            borderWidth: 1,
+          },
+          {
+            label: "발생률(인구 10만명당, 명)",
+            data: sigungu_data[3].slice(145, 160), // 발생률 데이터
+            borderWidth: 1,
+          },
+          {
+            label: "사망률(인구 10만명당, 명)",
+            data: sigungu_data[4].slice(145, 160), // 사망률 데이터
+            borderWidth: 1,
+          },
+        ],
+      },
+      options: {
+        responsive: false,
+        scales: {
+          myScale: {
+            type: "logarithmic",
+            position: "right", // `axis` is determined by the position as `'y'`
+          },
+          y: {
+            beginAtZero: true,
+          },
+        },
+      },
+    });
+    new Chart(ctx18, {
+      type: "bar",
+      data: {
+        labels: groupedData["충남"],
+        datasets: [
+          {
+            label: "누적 확진자",
+            data: sigungu_data[1].slice(160, 177), // 합계
+            borderWidth: 1,
+          },
+          {
+            label: "누적 발생",
+            data: sigungu_data[2].slice(160, 177), // 합계
+            borderWidth: 1,
+          },
+          {
+            label: "발생률(인구 10만명당, 명)",
+            data: sigungu_data[3].slice(160, 177), // 발생률 데이터
+            borderWidth: 1,
+          },
+          {
+            label: "사망률(인구 10만명당, 명)",
+            data: sigungu_data[4].slice(160, 177), // 사망률 데이터
+            borderWidth: 1,
+          },
+        ],
+      },
+      options: {
+        responsive: false,
+        scales: {
+          myScale: {
+            type: "logarithmic",
+            position: "right", // `axis` is determined by the position as `'y'`
+          },
+          y: {
+            beginAtZero: true,
+          },
+        },
+      },
+    });
+    new Chart(ctx19, {
+      type: "bar",
+      data: {
+        labels: groupedData["전북"],
+        datasets: [
+          {
+            label: "누적 확진자",
+            data: sigungu_data[1].slice(177, 193), // 합계
+            borderWidth: 1,
+          },
+          {
+            label: "누적 발생",
+            data: sigungu_data[2].slice(177, 193), // 합계
+            borderWidth: 1,
+          },
+          {
+            label: "발생률(인구 10만명당, 명)",
+            data: sigungu_data[3].slice(177, 193), // 발생률 데이터
+            borderWidth: 1,
+          },
+          {
+            label: "사망률(인구 10만명당, 명)",
+            data: sigungu_data[4].slice(177, 193), // 사망률 데이터
+            borderWidth: 1,
+          },
+        ],
+      },
+      options: {
+        responsive: false,
+        scales: {
+          myScale: {
+            type: "logarithmic",
+            position: "right", // `axis` is determined by the position as `'y'`
+          },
+          y: {
+            beginAtZero: true,
+          },
+        },
+      },
+    });
+    new Chart(ctx20, {
+      type: "bar",
+      data: {
+        labels: groupedData["전남"],
+        datasets: [
+          {
+            label: "누적 확진자",
+            data: sigungu_data[1].slice(193, 216), // 합계
+            borderWidth: 1,
+          },
+          {
+            label: "누적 발생",
+            data: sigungu_data[2].slice(193, 216), // 합계
+            borderWidth: 1,
+          },
+          {
+            label: "발생률(인구 10만명당, 명)",
+            data: sigungu_data[3].slice(193, 216), // 발생률 데이터
+            borderWidth: 1,
+          },
+          {
+            label: "사망률(인구 10만명당, 명)",
+            data: sigungu_data[4].slice(193, 216), // 사망률 데이터
+            borderWidth: 1,
+          },
+        ],
+      },
+      options: {
+        responsive: false,
+        scales: {
+          myScale: {
+            type: "logarithmic",
+            position: "right", // `axis` is determined by the position as `'y'`
+          },
+          y: {
+            beginAtZero: true,
+          },
+        },
+      },
+    });
+    new Chart(ctx21, {
+      type: "bar",
+      data: {
+        labels: groupedData["경북"],
+        datasets: [
+          {
+            label: "누적 확진자",
+            data: sigungu_data[1].slice(216, 241), // 합계
+            borderWidth: 1,
+          },
+          {
+            label: "누적 발생",
+            data: sigungu_data[2].slice(216, 241), // 합계
+            borderWidth: 1,
+          },
+          {
+            label: "발생률(인구 10만명당, 명)",
+            data: sigungu_data[3].slice(216, 241), // 발생률 데이터
+            borderWidth: 1,
+          },
+          {
+            label: "사망률(인구 10만명당, 명)",
+            data: sigungu_data[4].slice(216, 241), // 사망률 데이터
+            borderWidth: 1,
+          },
+        ],
+      },
+      options: {
+        responsive: false,
+        scales: {
+          myScale: {
+            type: "logarithmic",
+            position: "right", // `axis` is determined by the position as `'y'`
+          },
+          y: {
+            beginAtZero: true,
+          },
+        },
+      },
+    });
+    new Chart(ctx22, {
+      type: "bar",
+      data: {
+        labels: groupedData["경남"],
+        datasets: [
+          {
+            label: "누적 확진자",
+            data: sigungu_data[1].slice(241, 264), // 합계
+            borderWidth: 1,
+          },
+          {
+            label: "누적 발생",
+            data: sigungu_data[2].slice(241, 264), // 합계
+            borderWidth: 1,
+          },
+          {
+            label: "발생률(인구 10만명당, 명)",
+            data: sigungu_data[3].slice(241, 264), // 발생률 데이터
+            borderWidth: 1,
+          },
+          {
+            label: "사망률(인구 10만명당, 명)",
+            data: sigungu_data[4].slice(241, 264), // 사망률 데이터
+            borderWidth: 1,
+          },
+        ],
+      },
+      options: {
+        responsive: false,
+        scales: {
+          myScale: {
+            type: "logarithmic",
+            position: "right", // `axis` is determined by the position as `'y'`
+          },
+          y: {
+            beginAtZero: true,
+          },
+        },
+      },
+    });
+    new Chart(ctx23, {
+      type: "bar",
+      data: {
+        labels: groupedData["제주"],
+        datasets: [
+          {
+            label: "누적 확진자",
+            data: sigungu_data[1].slice(264, 267), // 합계
+            borderWidth: 1,
+          },
+          {
+            label: "누적 발생",
+            data: sigungu_data[2].slice(264, 267), // 합계
+            borderWidth: 1,
+          },
+          {
+            label: "발생률(인구 10만명당, 명)",
+            data: sigungu_data[3].slice(264, 267), // 발생률 데이터
+            borderWidth: 1,
+          },
+          {
+            label: "사망률(인구 10만명당, 명)",
+            data: sigungu_data[4].slice(264, 267), // 사망률 데이터
+            borderWidth: 1,
+          },
+        ],
+      },
+      options: {
+        responsive: false,
+        scales: {
+          myScale: {
+            type: "logarithmic",
+            position: "right", // `axis` is determined by the position as `'y'`
+          },
+          y: {
+            beginAtZero: true,
+          },
+        },
+      },
+    });
+
+    $("#chartSelect").change(function () {
+      const selectedChartId = $(this).val();
+
+      $("#hideChart canvas").hide();
+
+      $("#" + selectedChartId).show();
+    });
+  });
+</script>
+
+<body class="">
+  <div class="wrapper">
+    <div class="sidebar" data-color="black">
+      <!--
+        Tip 1: You can change the color of the sidebar using: data-color='blue | green | orange | red | yellow'
+      -->
+      <div class="logo">
+        <a class="simple-text logo-mini">
+          #1
+        </a>
+        <a class="simple-text logo-normal">
+          Project
+        </a>
+      </div>
+      <div class="sidebar-wrapper" id="sidebar-wrapper">
+        <ul class="nav">
+          <li>
+            <a href="#mapClick">
+              <i class="bi bi-bar-chart"></i>
+              <p style="font-size: 13px">지도</p>
+            </a>
+          </li>
+          <li>
+            <a href="#chart1">
+              <i class="bi bi-bar-chart"></i>
+              <p style="font-size: 13px">국내발생+해외유입, 사망</p>
+            </a>
+          </li>
+          <li>
+            <a href="#chart2">
+              <i class="bi bi-graph-up-arrow"></i>
+              <p style="font-size: 13px">연령별(10세단위)</p>
+            </a>
+          </li>
+          <li>
+            <a href="#chart3">
+              <i class="bi bi-bar-chart"></i>
+              <p style="font-size: 13px">성별(남+여)</p>
+            </a>
+          </li>
+          <li>
+            <a href="#chart4">
+              <i class="bi bi-graph-up-arrow"></i>
+              <p style="font-size: 13px">시도별 발생</p>
+            </a>
+          </li>
+          <li>
+            <a href="#chart5">
+              <i class="bi bi-graph-up-arrow"></i>
+              <p style="font-size: 13px">시도별 사망</p>
+            </a>
+          </li>
+          <li>
+            <a href="#chart6">
+              <i class="bi bi-bar-chart"></i>
+              <p style="font-size: 13px">시군구별 합계</p>
+            </a>
+          </li>
+          <li>
+            <a href="#map">
+              <i class="bi bi-bar-chart"></i>
+              <p style="font-size: 13px">시군구별 합계</p>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="main-panel" id="main-panel">
+      <!-- Navbar -->
+      <nav class="navbar navbar-expand-lg navbar-transparent bg-primary navbar-absolute">
+        <div class="container-fluid">
+          <div class="navbar-wrapper">
+            <div class="navbar-toggle">
+              <button type="button" class="navbar-toggler">
+                <span class="navbar-toggler-bar bar1"></span>
+                <span class="navbar-toggler-bar bar2"></span>
+                <span class="navbar-toggler-bar bar3"></span>
+              </button>
+            </div>
+            <a class="navbar-brand" href="#pablo">covid-19</a>
+          </div>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation"
+            aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-bar navbar-kebab"></span>
+            <span class="navbar-toggler-bar navbar-kebab"></span>
+            <span class="navbar-toggler-bar navbar-kebab"></span>
+          </button>
+          <div class="collapse navbar-collapse justify-content-end" id="navigation">
+          </div>
+        </div>
+      </nav>
+      <!-- End Navbar -->
+      <div class="panel-header panel-header-lg">
+        <h1 style="color:white; text-align: center;"> 코로나19 실시간 현황 </h1>
+        <div style="display: flex; font-size: 1.5rem; margin-top: 120px;">
+          <div id="count1" style="
+                color: white;
+                flex: 1;
+                margin-left: 50px;
+                text-align: center;
+              "></div>
+          <div id="count2" style="color: white; flex: 1; text-align: center"></div>
+          <div id="count3" style="color: white; flex: 1; text-align: center"></div>
+          <div id="count4" style="
+              color: white;
+              flex: 1;
+              text-align: center;
+            "></div>
+        </div>
+        <script>
+          let countBox1 = document.querySelector("#count1"),
+            count1 = 0;
+          let counting1 = setInterval(function () {
+            if (count1 >= 34491948) {
+              clearInterval(counting1);
+              return false;
+            }
+            count1 += 34491948 / 30;
+            countBox1.innerHTML =
+              "누적 국내 발생자(명)" +
+              "<br>" +
+              new Intl.NumberFormat().format(count1);
+          }, 20);
+
+          let countBox2 = document.querySelector("#count2"),
+            count2 = 0;
+          let counting2 = setInterval(function () {
+            if (count2 >= 79925) {
+              clearInterval(counting2);
+              return false;
+            }
+            count2 += 79925 / 40;
+            countBox2.innerHTML =
+              "누적 해외 유입(명)" +
+              "<br>" +
+              new Intl.NumberFormat().format(count2);
+          }, 20);
+
+          let countBox3 = document.querySelector("#count3"),
+            count3 = 0;
+          let counting3 = setInterval(function () {
+            if (count3 >= 35934) {
+              clearInterval(counting3);
+              return false;
+            }
+            count3 += 35934 / 25;
+            countInt = parseInt(count3);
+            countBox3.innerHTML =
+              "누적 사망(명)" +
+              "<br>" +
+              new Intl.NumberFormat().format(countInt);
+          }, 20);
+
+          let countBox4 = document.querySelector("#count4"),
+            count4 = 0;
+          let counting4 = setInterval(function () {
+            if (count4 >= 44336855) {
+              clearInterval(counting4);
+              return false;
+            }
+            count4 += 44336855 / 40;
+            countInt4 = parseInt(count4);
+            countBox4.innerHTML =
+              "접종 완료자(2차) 비율" +
+              "<br>" +
+              new Intl.NumberFormat().format(countInt4);
+          }, 20);
+        </script>
+      </div>
+
+      <div class="content" style="margin-top: 20px">
+        <div>
+          <script>
+
+            var news_link = {{ linklist | safe }};
+            var news_title = {{ titlelist | safe }};
+
+            var str = ''
+            $(document).ready(function () {
+              for (var i = 0; i < news_title.length; i++) {
+                str += '<p>' + '<a href="' + news_link.link[i] + '" target="_blank">' + news_title[i] + '</a></p>'
+              }
+              $('.card-title').html(str);
+            })
+
+          </script>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="card">
+                <div class="card-header">news</div>
+                <div class="card-body" style="text-align: left;">
+                  <h5 class="card-title">news</h5>
+                </div>
+              </div>
+            </div>
+
+            <div id="mapClick" style="text-align: right" class="col-sm-6"></div>
+
+            <script>
+              // 코로나 확진자 데이터 (예시 데이터, 실제 데이터로 교체 필요)
+              const covidData = {};
+              const regionNames = [
+                "서울특별시",
+                "부산광역시",
+                "대구광역시",
+                "인천광역시",
+                "광주광역시",
+                "대전광역시",
+                "울산광역시",
+                "세종특별자치시",
+                "경기도",
+                "강원도",
+                "충청북도",
+                "충청남도",
+                "전라북도",
+                "전라남도",
+                "경상북도",
+                "경상남도",
+                "제주특별자치도",
+              ];
+
+              regionNames.forEach((region, index) => {
+                covidData[region] = {
+                  cases: sido_total_d[1][index],
+                  deaths: sido_total_d[2][index],
+                };
+              });
+
+
+              const mapDataUrl =
+                "https://raw.githubusercontent.com/southkorea/southkorea-maps/master/kostat/2013/json/skorea_provinces_geo_simple.json";
+
+              const width = 800;
+              const height = 600;
+
+              const tooltip = d3
+                .select("body")
+                .append("div")
+                .attr("class", "tooltip")
+                .style("opacity", 0);
+
+              const svg = d3
+                .select("#mapClick")
+                .append("svg")
+                .attr("width", width)
+                .attr("height", height);
+
+              d3.json(mapDataUrl).then(function (mapData) {
+                const projection = d3
+                  .geoMercator()
+                  .fitSize([width, height], mapData);
+
+                const path = d3.geoPath().projection(projection);
+
+                svg
+                  .selectAll("path")
+                  .data(mapData.features)
+                  .enter()
+                  .append("path")
+                  .attr("d", path)
+                  .style("fill", "lightgray")
+                  .style("stroke", "white")
+                  .on("click", (event, d) => {
+                    const selectedRegion = d.properties.name;
+                    const cases = covidData[selectedRegion].cases;
+                    const deaths = covidData[selectedRegion].deaths;
+
+                    tooltip
+                      .transition()
+                      .duration(200)
+                      .style("opacity", 0.9)
+                      .style("left", event.pageX + "px")
+                      .style("top", event.pageY - 28 + "px")
+                      .style("white-space", "pre-line")
+                      .text(
+                        `${selectedRegion}\n 확진자: ${cases} 명 \n 사망자: ${deaths} 명`
+                      );
+
+                    d3.select(event.currentTarget)
+                      .raise()
+                      .style("stroke", "black");
+                  })
+                  .on("mouseout", (event, d) => {
+                    tooltip.transition().duration(500).style("opacity", 0);
+
+                    svg.selectAll("path").style("stroke", "white");
+                  });
+              });
+            </script>
+          </div>
+
+          <div>
+            <div>
+              <div class="chartName" id="chart1">
+                발생별(국내발생+해외유입), 사망
+              </div>
+              <canvas id="myChart1" style="height: 30vh; width: 85vw"></canvas>
+              <br>
+              <table class="table" style=" width:100%; height: 100px; margin-top: 30px; text-align: center;">
+                <thead>
+                  <tr>
+                    <th scope="col">일자</th>
+                    <th scope="col">계(명)</th>
+                    <th scope="col">국내발생(명)</th>
+                    <th scope="col">해외유입(명)</th>
+                    <th scope="col">사망(명)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>누적(명)</td>
+                    <td>34,571,873</td>
+                    <td>34,491,948</td>
+                    <td>79,925</td>
+                    <td>35,934</td>
+                  </tr>
+                  <tr>
+                    <td>2023-08-31</td>
+                    <td>49,751</td>
+                    <td>49,740</td>
+                    <td>11</td>
+                    <td>76</td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <div class="chartName" id="chart2">연령별(10세단위)</div>
+              <canvas id="myChart2" style="height: 30vh; width: 85vw"></canvas>
+
+              <table class="table" style=" width:100%; height: 100px; margin-top: 30px; text-align: center;">
+                <thead>
+                  <tr>
+                    <th scope="col">지역</th>
+                    <th scope="col">계(명)</th>
+                    <th scope="col">일자<br>2023-8-28</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>누적(명)</td>
+                    <td>34,571,873</td>
+                    <td>13,149</td>
+                  </tr>
+                  <tr>
+                    <td>0~9세</td>
+                    <td>3,270,242</td>
+                    <td>883</td>
+                  </tr>
+                  <tr>
+                    <td>10~19세</td>
+                    <td>4,246,913</td>
+                    <td>2,109</td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <div style=" text-align: center;">
+                <input value="더보기"
+                  onclick="if(this.parentNode.getElementsByTagName('div')[0].style.display != ''){this.parentNode.getElementsByTagName('div')[0].style.display = '';this.value = '숨기기';}else{this.parentNode.getElementsByTagName('div')[0].style.display = 'none'; this.value = '더보기';}"
+                  input type="button" value="버튼" style="width:50%; height:100%" />
+                <div style="display: none;">
+                  <table class="table" style=" width:100%; height: 100px; margin: auto; text-align: center;">
+                    <tbody>
+                      <tr>
+                        <td>20~29세</td>
+                        <td>5,001,095</td>
+                        <td>1,540</td>
+                      </tr>
+                      <tr>
+                        <td>30~39세</td>
+                        <td>5,077,644</td>
+                        <td>1,889</td>
+                      </tr>
+                      <tr>
+                        <td>40~49세</td>
+                        <td>5,237,457</td>
+                        <td>1,944</td>
+                      </tr>
+                      <tr>
+                        <td>50~59세</td>
+                        <td>4,530,938</td>
+                        <td>1,614</td>
+                      </tr>
+                      <tr>
+                        <td>60~69세</td>
+                        <td>3,898,743</td>
+                        <td>1,604</td>
+                      </tr>
+                      <tr>
+                        <td>70~79세</td>
+                        <td>2,055,996</td>
+                        <td>884</td>
+                      </tr>
+                      <tr>
+                        <td>80세 이상</td>
+                        <td>1,252,845</td>
+                        <td>682</td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div class="chartName" id="chart3">성별(남+여)</div>
+              <canvas id="myChart3" style="height: 30vh; width: 85vw"></canvas>
+
+              <table class="table" style=" width:100%; height: 100px; margin-top: 30px; text-align: center;">
+                <thead>
+                  <tr>
+                    <th scope="col">일자</th>
+                    <th scope="col">계(명)</th>
+                    <th scope="col">남성(명)</th>
+                    <th scope="col">여성(명)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>누적(명)</td>
+                    <td>34,571,873</td>
+                    <td>15,891,942</td>
+                    <td>18,679,931</td>
+                  </tr>
+                  <tr>
+                    <td>2023-08-31</td>
+                    <td>49,751</td>
+                    <td>21,775</td>
+                    <td>27,976</td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <div class="chartName" id="chart4">
+                시도별 발생(17개시도+검역)
+              </div>
+              <canvas id="myChart4" style="height: 30vh; width: 85vw"></canvas>
+
+              <table class="table" style=" width:100%; height: 100px; margin-top: 30px; text-align: center;">
+                <thead>
+                  <tr>
+                    <th scope="col">지역</th>
+                    <th scope="col">계(명)</th>
+                    <th scope="col">일자<br>2023-8-31</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>누적(명)</td>
+                    <td>34,571,873</td>
+                    <td>49,751</td>
+
+                  </tr>
+                  <tr>
+                    <td>서울</td>
+                    <td>6,751,223</td>
+                    <td>8,564</td>
+                  </tr>
+                  <tr>
+                    <td>부산</td>
+                    <td>2,092,592</td>
+                    <td>2,129</td>
+                  </tr>
+                </tbody>
+              </table>
+              <div style=" text-align: center;">
+                <input value="더보기"
+                  onclick="if(this.parentNode.getElementsByTagName('div')[0].style.display != ''){this.parentNode.getElementsByTagName('div')[0].style.display = '';this.value = '숨기기';}else{this.parentNode.getElementsByTagName('div')[0].style.display = 'none'; this.value = '더보기';}"
+                  input type="button" value="버튼" style="width:50%; height:100%" />
+                <div style="display: none;">
+                  <table class="table" style=" width:100%; height: 100px; margin: auto; text-align: center;">
+                    <tbody>
+                      <tr>
+                        <td>대구</td>
+                        <td>1,516,396</td>
+                        <td>2,440</td>
+                      </tr>
+                      <tr>
+                        <td>인천</td>
+                        <td>1,991,875</td>
+                        <td>3,216</td>
+                      </tr>
+                      <tr>
+                        <td>광주</td>
+                        <td>1,018,481</td>
+                        <td>1,599</td>
+                      </tr>
+                      <tr>
+                        <td>대전</td>
+                        <td>1,013,271</td>
+                        <td>1,422</td>
+                      </tr>
+                      <tr>
+                        <td>울산</td>
+                        <td>738,120</td>
+                        <td>1,056</td>
+                      </tr>
+                      <tr>
+                        <td>세종</td>
+                        <td>273,413</td>
+                        <td>420</td>
+                      </tr>
+                      <tr>
+                        <td>경기</td>
+                        <td>9,266,555</td>
+                        <td>13,388</td>
+                      </tr>
+                      <tr>
+                        <td>강원</td>
+                        <td>1,005,827</td>
+                        <td>1,717</td>
+                      </tr>
+                      <tr>
+                        <td>충북</td>
+                        <td>1,075,459</td>
+                        <td>2,122</td>
+                      </tr>
+                      <tr>
+                        <td>충남</td>
+                        <td>1,390,748</td>
+                        <td>2,293</td>
+                      </tr>
+                      <tr>
+                        <td>전북</td>
+                        <td>1,167,903</td>
+                        <td>1,936</td>
+                      </tr>
+                      <tr>
+                        <td>전남</td>
+                        <td>1,142,438</td>
+                        <td>1,566</td>
+                      </tr>
+                      <tr>
+                        <td>경북</td>
+                        <td>1,581,188</td>
+                        <td>2,666</td>
+                      </tr>
+                      <tr>
+                        <td>경남</td>
+                        <td>2,075,970</td>
+                        <td>2,647</td>
+                      </tr>
+                      <tr>
+                        <td>제주</td>
+                        <td>451,522</td>
+                        <td>569</td>
+                      </tr>
+                      <tr>
+                        <td>검역</td>
+                        <td>18,892</td>
+                        <td>1</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div class="chartName" id="chart5">
+                시도별 사망(17개시도+검역)
+              </div>
+              <canvas id="myChart5" style="height: 30vh; width: 85vw"></canvas>
+
+              <table class="table" style=" width:100%; height: 100px; margin-top: 30px; text-align: center;">
+                <thead>
+                  <tr>
+                    <th scope="col">지역</th>
+                    <th scope="col">계(명)</th>
+                    <th scope="col">일자<br>2023-8-31</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>누적(명)</td>
+                    <td>35,934</td>
+                    <td>76</td>
+
+                  </tr>
+                  <tr>
+                    <td>서울</td>
+                    <td>6,675</td>
+                    <td>6</td>
+                  </tr>
+                  <tr>
+                    <td>부산</td>
+                    <td>2,941</td>
+                    <td>5</td>
+                  </tr>
+                </tbody>
+              </table>
+              <div style=" text-align: center;">
+                <input value="더보기"
+                  onclick="if(this.parentNode.getElementsByTagName('div')[0].style.display != ''){this.parentNode.getElementsByTagName('div')[0].style.display = '';this.value = '숨기기';}else{this.parentNode.getElementsByTagName('div')[0].style.display = 'none'; this.value = '더보기';}"
+                  input type="button" value="버튼" style="width:50%; height:100%" />
+                <div style="display: none;">
+                  <table class="table" style=" width:100%; height: 100px; margin: auto; text-align: center;">
+                    <tbody>
+                      <tr>
+                        <td>대구</td>
+                        <td>2,069</td>
+                        <td>1</td>
+                      </tr>
+                      <tr>
+                        <td>인천</td>
+                        <td>1,969</td>
+                        <td>2</td>
+                      </tr>
+                      <tr>
+                        <td>광주</td>
+                        <td>875</td>
+                        <td>8</td>
+                      </tr>
+                      <tr>
+                        <td>대전</td>
+                        <td>1,011</td>
+                        <td>5</td>
+                      </tr>
+                      <tr>
+                        <td>울산</td>
+                        <td>546</td>
+                        <td>0</td>
+                      </tr>
+                      <tr>
+                        <td>세종</td>
+                        <td>60</td>
+                        <td>0</td>
+                      </tr>
+                      <tr>
+                        <td>경기</td>
+                        <td>8,643</td>
+                        <td>14</td>
+                      </tr>
+                      <tr>
+                        <td>강원</td>
+                        <td>1,416</td>
+                        <td>11</td>
+                      </tr>
+                      <tr>
+                        <td>충북</td>
+                        <td>1,096</td>
+                        <td>2</td>
+                      </tr>
+                      <tr>
+                        <td>충남</td>
+                        <td>1,645</td>
+                        <td>2</td>
+                      </tr>
+                      <tr>
+                        <td>전북</td>
+                        <td>1,279</td>
+                        <td>2</td>
+                      </tr>
+                      <tr>
+                        <td>전남</td>
+                        <td>1,090</td>
+                        <td>5</td>
+                      </tr>
+                      <tr>
+                        <td>경북</td>
+                        <td>2,182</td>
+                        <td>7</td>
+                      </tr>
+                      <tr>
+                        <td>경남</td>
+                        <td>2,102</td>
+                        <td>6</td>
+                      </tr>
+                      <tr>
+                        <td>제주</td>
+                        <td>319</td>
+                        <td>0</td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div class="chartName" id="chart6">
+                시군구별(발생률,사망률) 합계
+              </div>
+              <canvas id="myChart6" style="height: 30vh; width: 85vw"></canvas>
+
+            </div>
+            <div style="text-align: center; margin-top: 30px; font-size: 1.5em">
+              <select id="chartSelect" style="text-align: center; width: 102px; height: 45px">
+                <option value="myChart7">서울</option>
+                <option value="myChart8">부산</option>
+                <option value="myChart9">대구</option>
+                <option value="myChart10">인천</option>
+                <option value="myChart11">광주</option>
+                <option value="myChart12">대전</option>
+                <option value="myChart13">울산</option>
+                <option value="myChart14">세종</option>
+                <option value="myChart15">경기</option>
+                <option value="myChart16">강원</option>
+                <option value="myChart17">충북</option>
+                <option value="myChart18">충남</option>
+                <option value="myChart19">전북</option>
+                <option value="myChart20">전남</option>
+                <option value="myChart21">경북</option>
+                <option value="myChart22">경남</option>
+                <option value="myChart23">제주</option>
+              </select>
+            </div>
+            <div id="hideChart">
+              <canvas id="myChart7" style="height: 30vh; width: 85vw; display: none"></canvas>
+              <canvas id="myChart8" style="height: 30vh; width: 85vw; display: none"></canvas>
+              <canvas id="myChart9" style="height: 30vh; width: 85vw; display: none"></canvas>
+              <canvas id="myChart10" style="height: 30vh; width: 85vw; display: none"></canvas>
+              <canvas id="myChart11" style="height: 30vh; width: 85vw; display: none"></canvas>
+              <canvas id="myChart12" style="height: 30vh; width: 85vw; display: none"></canvas>
+              <canvas id="myChart13" style="height: 30vh; width: 85vw; display: none"></canvas>
+              <canvas id="myChart14" style="height: 30vh; width: 85vw; display: none"></canvas>
+              <canvas id="myChart15" style="height: 30vh; width: 85vw; display: none"></canvas>
+              <canvas id="myChart16" style="height: 30vh; width: 85vw; display: none"></canvas>
+              <canvas id="myChart17" style="height: 30vh; width: 85vw; display: none"></canvas>
+              <canvas id="myChart18" style="height: 30vh; width: 85vw; display: none"></canvas>
+              <canvas id="myChart19" style="height: 30vh; width: 85vw; display: none"></canvas>
+              <canvas id="myChart20" style="height: 30vh; width: 85vw; display: none"></canvas>
+              <canvas id="myChart21" style="height: 30vh; width: 85vw; display: none"></canvas>
+              <canvas id="myChart22" style="height: 30vh; width: 85vw; display: none"></canvas>
+              <canvas id="myChart23" style="height: 30vh; width: 85vw; display: none"></canvas>
+            </div>
+
+            <table class="table" style=" width:100%; height: 100px; margin-top: 30px; text-align: center;">
+              <thead>
+                <tr>
+                  <th scope="col">시도명</th>
+                  <th scope="col">시군구</th>
+                  <th scope="col">누적확진자</th>
+                  <th scope="col">누적사망자</th>
+                  <th scope="col">발생률(인구10만명당,명)</th>
+                  <th scope="col">사망률(인구 10만명당,명)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>서울</td>
+                  <td>합계</td>
+                  <td>6,751,223</td>
+                  <td>6,675</td>
+                  <td>71,605</td>
+                  <td>71</td>
+                </tr>
+                <tr>
+                  <td>부산</td>
+                  <td>합계</td>
+                  <td>2,092,592</td>
+                  <td>2,941</td>
+                  <td>63,071</td>
+                  <td>89</td>
+                </tr>
+              </tbody>
+            </table>
+            <div style=" text-align: center;">
+              <input value="더보기"
+                onclick="if(this.parentNode.getElementsByTagName('div')[0].style.display != ''){this.parentNode.getElementsByTagName('div')[0].style.display = '';this.value = '숨기기';}else{this.parentNode.getElementsByTagName('div')[0].style.display = 'none'; this.value = '더보기';}"
+                input type="button" value="버튼" style="width:50%; height:100%" />
+              <div style="display: none;">
+                <table class="table" style=" width:100%; height: 100px; margin: auto; text-align: center;">
+                  <tbody>
+                    <tr>
+                      <td>서울</td>
+                      <td>합계</td>
+                      <td>6,751,223</td>
+                      <td>6,675</td>
+                      <td>71,605</td>
+                      <td>71</td>
+                    </tr>
+                    <tr>
+                      <td>부산</td>
+                      <td>합계</td>
+                      <td>2,092,592</td>
+                      <td>2,941</td>
+                      <td>63,071</td>
+                      <td>89</td>
+                    </tr>
+                    <tr>
+                      <td>대구</td>
+                      <td>합계</td>
+                      <td>1,516,396</td>
+                      <td>2,069</td>
+                      <td>64,133</td>
+                      <td>88</td>
+                    </tr>
+                    <tr>
+                      <td>인천</td>
+                      <td>합계</td>
+                      <td>1,991,875</td>
+                      <td>1,969</td>
+                      <td>67,127</td>
+                      <td>66</td>
+                    </tr>
+                    <tr>
+                      <td>광주</td>
+                      <td>합계</td>
+                      <td>1,018,481</td>
+                      <td>875</td>
+                      <td>71,170</td>
+                      <td>61</td>
+                    </tr>
+                    <tr>
+                      <td>대전</td>
+                      <td>합계</td>
+                      <td>1,013,271</td>
+                      <td>1,011</td>
+                      <td>70,071</td>
+                      <td>70</td>
+                    </tr>
+                    <tr>
+                      <td>울산</td>
+                      <td>합계</td>
+                      <td>738,120</td>
+                      <td>546</td>
+                      <td>66,458</td>
+                      <td>49</td>
+                    </tr>
+                    <tr>
+                      <td>세종</td>
+                      <td>합계</td>
+                      <td>273,413</td>
+                      <td>60</td>
+                      <td>71,277</td>
+                      <td>16</td>
+                    </tr>
+                    <tr>
+                      <td>경기</td>
+                      <td>합계</td>
+                      <td>9,266,555</td>
+                      <td>8,643</td>
+                      <td>68,189</td>
+                      <td>64</td>
+                    </tr>
+                    <tr>
+                      <td>강원</td>
+                      <td>합계</td>
+                      <td>1,005,827</td>
+                      <td>1,416</td>
+                      <td>65,462</td>
+                      <td>92</td>
+                    </tr>
+                    <tr>
+                      <td>충북</td>
+                      <td>합계</td>
+                      <td>1,075,459</td>
+                      <td>1,096</td>
+                      <td>67,424</td>
+                      <td>69</td>
+                    </tr>
+                    <tr>
+                      <td>충남</td>
+                      <td>합계</td>
+                      <td>1,390,748</td>
+                      <td>1,645</td>
+                      <td>65,507</td>
+                      <td>77</td>
+                    </tr>
+                    <tr>
+                      <td>전북</td>
+                      <td>합계</td>
+                      <td>1,167,903</td>
+                      <td>1,279</td>
+                      <td>65,998</td>
+                      <td>72</td>
+                    </tr>
+                    <tr>
+                      <td>전남</td>
+                      <td>합계</td>
+                      <td>1,142,438</td>
+                      <td>1,090</td>
+                      <td>62,851</td>
+                      <td>60</td>
+                    </tr>
+                    <tr>
+                      <td>경북</td>
+                      <td>합계</td>
+                      <td>1,581,188</td>
+                      <td>2,182</td>
+                      <td>60,822</td>
+                      <td>84</td>
+                    </tr>
+                    <tr>
+                      <td>경남</td>
+                      <td>합계</td>
+                      <td>2,075,970</td>
+                      <td>2,102</td>
+                      <td>63,282</td>
+                      <td>64</td>
+                    </tr>
+                    <tr>
+                      <td>제주</td>
+                      <td>합계</td>
+                      <td>451,522</td>
+                      <td>319</td>
+                      <td>66,581</td>
+                      <td>47</td>
+                    </tr>
+
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="chartName" id="mapTitle">보건소 검색</div>
+
+            <div class="map_wrap">
+              <div id="map" style="
+                  width: 80%;
+                  height: 80%;
+                  position: relative;
+                  overflow: hidden;
+                  margin: 0 auto;
+                "></div>
+              <div id="menu_wrap" class="bg_white">
+                <div class="option">
+                  <div>
+                    <form onsubmit="searchPlaces(); return false;">
+                      키워드 :
+                      <input type="text" value="보건소" id="keyword" size="15" />
+                      <button type="submit">검색하기</button>
+                    </form>
+                  </div>
+                </div>
+                <hr />
+                <ul id="placesList"></ul>
+                <div id="pagination"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <footer class="footer">
+          <div class="container-fluid">
+            <nav>
+              <ul>
+                <li>
+                  <a href="http://presentation.creative-tim.com"> About Us </a>
+                </li>
+              </ul>
+            </nav>
+            <div class="copyright" id="copyright">
+              &copy;
+              <script>
+                document
+                  .getElementById("copyright")
+                  .appendChild(
+                    document.createTextNode(new Date().getFullYear())
+                  );
+              </script>
+              , Designed by
+              <a href="https://www.invisionapp.com" target="_blank">Invision</a>. Coded by
+              <a href="https://www.creative-tim.com" target="_blank">Creative Tim</a>.
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+
+    <script type="text/javascript"
+      src="//dapi.kakao.com/v2/maps/sdk.js?appkey=36a74c57aff77480a5b2e7013164cb4b&libraries=services"></script>
+
+    <script>
+      // 마커를 담을 배열입니다
+      var markers = [];
+
+      var mapContainer = document.getElementById("map"), // 지도를 표시할 div
+        mapOption = {
+          center: new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
+          level: 3, // 지도의 확대 레벨
+        };
+
+      // 지도를 생성합니다
+      var map = new kakao.maps.Map(mapContainer, mapOption);
+
+      // 장소 검색 객체를 생성합니다
+      var ps = new kakao.maps.services.Places();
+
+      // 검색 결과 목록이나 마커를 클릭했을 때 장소명을 표출할 인포윈도우를 생성합니다
+      var infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
+
+      // 키워드로 장소를 검색합니다
+      searchPlaces();
+
+      // 키워드 검색을 요청하는 함수입니다
+      function searchPlaces() {
+        var keyword = document.getElementById("keyword").value;
+
+        if (!keyword.replace(/^\s+|\s+$/g, "")) {
+          alert("키워드를 입력해주세요!");
+          return false;
+        }
+
+        // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
+        ps.keywordSearch(keyword, placesSearchCB);
+      }
+
+      // 장소검색이 완료됐을 때 호출되는 콜백함수 입니다
+      function placesSearchCB(data, status, pagination) {
+        if (status === kakao.maps.services.Status.OK) {
+          // 정상적으로 검색이 완료됐으면
+          // 검색 목록과 마커를 표출합니다
+          displayPlaces(data);
+
+          // 페이지 번호를 표출합니다
+          displayPagination(pagination);
+        } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
+          alert("검색 결과가 존재하지 않습니다.");
+          return;
+        } else if (status === kakao.maps.services.Status.ERROR) {
+          alert("검색 결과 중 오류가 발생했습니다.");
+          return;
+        }
+      }
+
+      // 검색 결과 목록과 마커를 표출하는 함수입니다
+      function displayPlaces(places) {
+        var listEl = document.getElementById("placesList"),
+          menuEl = document.getElementById("menu_wrap"),
+          fragment = document.createDocumentFragment(),
+          bounds = new kakao.maps.LatLngBounds(),
+          listStr = "";
+
+        // 검색 결과 목록에 추가된 항목들을 제거합니다
+        removeAllChildNods(listEl);
+
+        // 지도에 표시되고 있는 마커를 제거합니다
+        removeMarker();
+
+        for (var i = 0; i < places.length; i++) {
+          // 마커를 생성하고 지도에 표시합니다
+          var placePosition = new kakao.maps.LatLng(places[i].y, places[i].x),
+            marker = addMarker(placePosition, i),
+            itemEl = getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
+
+          // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+          // LatLngBounds 객체에 좌표를 추가합니다
+          bounds.extend(placePosition);
+
+          // 마커와 검색결과 항목에 mouseover 했을때
+          // 해당 장소에 인포윈도우에 장소명을 표시합니다
+          // mouseout 했을 때는 인포윈도우를 닫습니다
+          (function (marker, title) {
+            kakao.maps.event.addListener(marker, "mouseover", function () {
+              displayInfowindow(marker, title);
+            });
+
+            kakao.maps.event.addListener(marker, "mouseout", function () {
+              infowindow.close();
+            });
+
+            itemEl.onmouseover = function () {
+              displayInfowindow(marker, title);
+            };
+
+            itemEl.onmouseout = function () {
+              infowindow.close();
+            };
+          })(marker, places[i].place_name);
+
+          fragment.appendChild(itemEl);
+        }
+
+        // 검색결과 항목들을 검색결과 목록 Element에 추가합니다
+        listEl.appendChild(fragment);
+        menuEl.scrollTop = 0;
+
+        // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+        map.setBounds(bounds);
+      }
+
+      // 검색결과 항목을 Element로 반환하는 함수입니다
+      function getListItem(index, places) {
+        var el = document.createElement("li"),
+          itemStr =
+            '<span class="markerbg marker_' +
+            (index + 1) +
+            '"></span>' +
+            '<div class="info">' +
+            "   <h5>" +
+            places.place_name +
+            "</h5>";
+
+        if (places.road_address_name) {
+          itemStr +=
+            "    <span>" +
+            places.road_address_name +
+            "</span>" +
+            '   <span class="jibun gray">' +
+            places.address_name +
+            "</span>";
+        } else {
+          itemStr += "    <span>" + places.address_name + "</span>";
+        }
+
+        itemStr += '  <span class="tel">' + places.phone + "</span>" + "</div>";
+
+        el.innerHTML = itemStr;
+        el.className = "item";
+
+        return el;
+      }
+
+      // 마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
+      function addMarker(position, idx, title) {
+        var imageSrc =
+          "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png", // 마커 이미지 url, 스프라이트 이미지를 씁니다
+          imageSize = new kakao.maps.Size(36, 37), // 마커 이미지의 크기
+          imgOptions = {
+            spriteSize: new kakao.maps.Size(36, 691), // 스프라이트 이미지의 크기
+            spriteOrigin: new kakao.maps.Point(0, idx * 46 + 10), // 스프라이트 이미지 중 사용할 영역의 좌상단 좌표
+            offset: new kakao.maps.Point(13, 37), // 마커 좌표에 일치시킬 이미지 내에서의 좌표
+          },
+          markerImage = new kakao.maps.MarkerImage(
+            imageSrc,
+            imageSize,
+            imgOptions
+          ),
+          marker = new kakao.maps.Marker({
+            position: position, // 마커의 위치
+            image: markerImage,
+          });
+
+        marker.setMap(map); // 지도 위에 마커를 표출합니다
+        markers.push(marker); // 배열에 생성된 마커를 추가합니다
+
+        return marker;
+      }
+
+      // 지도 위에 표시되고 있는 마커를 모두 제거합니다
+      function removeMarker() {
+        for (var i = 0; i < markers.length; i++) {
+          markers[i].setMap(null);
+        }
+        markers = [];
+      }
+
+      // 검색결과 목록 하단에 페이지번호를 표시는 함수입니다
+      function displayPagination(pagination) {
+        var paginationEl = document.getElementById("pagination"),
+          fragment = document.createDocumentFragment(),
+          i;
+
+        // 기존에 추가된 페이지번호를 삭제합니다
+        while (paginationEl.hasChildNodes()) {
+          paginationEl.removeChild(paginationEl.lastChild);
+        }
+
+        for (i = 1; i <= pagination.last; i++) {
+          var el = document.createElement("a");
+          el.href = "#";
+          el.innerHTML = i;
+
+          if (i === pagination.current) {
+            el.className = "on";
+          } else {
+            el.onclick = (function (i) {
+              return function () {
+                pagination.gotoPage(i);
+              };
+            })(i);
+          }
+
+          fragment.appendChild(el);
+        }
+        paginationEl.appendChild(fragment);
+      }
+
+      // 검색결과 목록 또는 마커를 클릭했을 때 호출되는 함수입니다
+      // 인포윈도우에 장소명을 표시합니다
+      function displayInfowindow(marker, title) {
+        var content = '<div style="padding:5px;z-index:1;">' + title + "</div>";
+
+        infowindow.setContent(content);
+        infowindow.open(map, marker);
+      }
+
+      // 검색결과 목록의 자식 Element를 제거하는 함수입니다
+      function removeAllChildNods(el) {
+        while (el.hasChildNodes()) {
+          el.removeChild(el.lastChild);
+        }
+      }
+    </script>
+    <!--   Core JS Files   -->
+    <script src="../static/js/core/jquery.min.js"></script>
+    <script src="../static/js/core/popper.min.js"></script>
+    <script src="../static/js/core/bootstrap.min.js"></script>
+    <script src="../static/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+    <!--  Google Maps Plugin    -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
+    <!-- Chart JS -->
+    <!-- <script src='../static/js/plugins/chartjs.min.js'></script> -->
+    <!--  Notifications Plugin    -->
+    <script src="../static/js/plugins/bootstrap-notify.js"></script>
+    <!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
+    <script src="../static/js/now-ui-dashboard.min.js?v=1.5.0" type="text/javascript"></script>
+    <!-- Now Ui Dashboard DEMO methods, don't include it in your project! -->
+    <script src="../static/demo/demo.js"></script>
+    <script>
+      $(document).ready(function () {
+        // Javascript method's body can be found in assets/js/demos.js
+        demo.initDashboardPageCharts();
+      });
+    </script>
+</body>
+
+</html>
